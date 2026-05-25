@@ -17,6 +17,8 @@ Corporate environments usually fall into one of two cases:
 
 The standalone CLI does not require VS Code. It only requires Node.js and access to local GigaCode session logs.
 
+For the VS Code dashboard path, see [VS Code Installation]({{< ref "getting-started/vscode-installation" >}}).
+
 ## Download the GitHub ZIP
 
 Download the ZIP only after the branch or release you need has been pushed to GitHub. For the GigaCode standalone CLI branch, use:

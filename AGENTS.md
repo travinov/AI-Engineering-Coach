@@ -15,6 +15,7 @@ This is a quick map of the docs tree so readers and agents can see the available
 - [Features](/features/)
 - [Getting Started](/getting-started/)
   - [Installation](/getting-started/installation/)
+  - [VS Code Installation](/getting-started/vscode-installation/)
   - [Supported Tools](/getting-started/supported-tools/)
 - [Improve](/improve/)
   - [Anti-Patterns](/improve/anti-patterns/)
