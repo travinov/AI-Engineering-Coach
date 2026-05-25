@@ -33,6 +33,44 @@ Or open the Extensions panel in VS Code, click the `...` menu, choose **Install 
 
 To run the extension in development mode instead, use `npm run build` and press `F5` in VS Code to launch the Extension Development Host.
 
+## Standalone CLI
+
+The same package also builds a standalone Node.js CLI for environments where opening VS Code is not practical:
+
+```bash
+npm run build
+node dist/cli.js summary --harness gigacode
+```
+
+To install the CLI command from a local checkout:
+
+```bash
+npm install -g .
+ai-engineer-coach summary --harness gigacode
+```
+
+By default, the CLI reads GigaCode sessions from the standard projects directory:
+
+| OS | Default GigaCode projects directory |
+| --- | --- |
+| macOS | `$HOME/.gigacode/projects` |
+| Windows | `%USERPROFILE%\.gigacode\projects` |
+| Linux / SberOS | `$HOME/.gigacode/projects` |
+
+If the logs are stored elsewhere, pass the directory explicitly:
+
+```bash
+ai-engineer-coach summary --harness gigacode --path /path/to/.gigacode/projects
+```
+
+For non-interactive setup, use an environment variable:
+
+```bash
+AI_ENGINEER_COACH_GIGACODE_PROJECTS=/path/to/.gigacode/projects ai-engineer-coach summary --harness gigacode
+```
+
+The CLI can also find the `gigacode` executable in `PATH` for diagnostics, but analytics are based on the session log files, not on the executable path.
+
 ## Opening the Dashboard
 
 After installation, open the Command Palette and run:

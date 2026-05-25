@@ -7,6 +7,9 @@
   "author": {
     "name": "Sanjay Singh, Joy Distelbrink, Tamas Boncz, Aymen Furter"
   },
+  "bin": {
+    "ai-engineer-coach": "./dist/cli.js"
+  },
   "license": "MIT",
   "icon": "assets/icon.png",
   "repository": {
@@ -81,6 +84,7 @@
   "scripts": {
     "vscode:prepublish": "npm run build",
     "build": "node esbuild.mjs",
+    "cli": "node dist/cli.js",
     "watch": "node esbuild.mjs --watch",
     "lint": "eslint src/",
     "bench": "vitest bench",

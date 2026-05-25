@@ -36,6 +36,18 @@ Parses session logs from the open-source OpenCode terminal tool that supports mu
 
 Reads chat JSONL sessions from the GigaCode CLI under `~/.gigacode/projects/*/chats/`. Captures prompts, completions, tool calls, file edits, and token usage when recorded.
 
+The standalone CLI also supports explicit GigaCode log discovery:
+
+```bash
+ai-engineer-coach summary --harness gigacode --path ~/.gigacode/projects
+```
+
+On Windows, use the matching user profile path:
+
+```powershell
+ai-engineer-coach summary --harness gigacode --path "$env:USERPROFILE\.gigacode\projects"
+```
+
 ## GitHub Copilot for Xcode
 
 Reads Copilot Chat conversation logs from Apple's Xcode IDE. Sessions are parsed from SQLite databases stored in the GitHub Copilot configuration directory.
