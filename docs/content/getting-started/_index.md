@@ -7,7 +7,7 @@ AI Engineer Coach is a VS Code extension that analyzes your AI-assisted coding s
 
 ## Requirements
 
-- **VS Code** 1.85 or later (or VS Code Insiders) — harness shown as "Local Agent"
+- **VS Code** 1.115 or later (or VS Code Insiders) — harness shown as "Local Agent"
 - At least one supported AI coding tool with existing session logs
 
 No API keys, accounts, or external services required. Everything runs locally.

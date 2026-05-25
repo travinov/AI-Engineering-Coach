@@ -6,7 +6,7 @@ Analyze your AI coding assistant usage across VS Code, GitHub Copilot for Xcode,
 
 <p align="center">
 <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
-<img alt="VS Code 1.85+" src="https://img.shields.io/badge/VS%20Code-1.85%2B-007ACC">
+<img alt="VS Code 1.115+" src="https://img.shields.io/badge/VS%20Code-1.115%2B-007ACC">
 </p>
 
 ## Highlights

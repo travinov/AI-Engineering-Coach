@@ -10,7 +10,7 @@ Use this path when you need the interactive dashboard inside VS Code. If you onl
 
 ## What You Need
 
-- VS Code 1.85 or later.
+- VS Code 1.115 or later.
 - Node.js and npm on the machine that builds the `.vsix`.
 - Access to the local session logs you want to analyze, for example `~/.gigacode/projects` for GigaCode.
 
