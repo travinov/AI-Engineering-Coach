@@ -37,12 +37,36 @@ On macOS / Linux / SberOS:
 
 ```bash
 cd ~/Downloads/AI-Engineering-Coach-codex-standalone-cli
+pwd
+ls package.json
 ```
 
 On Windows PowerShell:
 
 ```powershell
 cd "$env:USERPROFILE\Downloads\AI-Engineering-Coach-codex-standalone-cli"
+Get-Location
+Test-Path .\package.json
+```
+
+Run `npm install` only from the extracted project folder. If `npm install` fails with `ENOENT` and a path such as `/Users/<you>/package.json`, you are in the wrong directory. Find the extracted project and enter it first:
+
+macOS / Linux / SberOS:
+
+```bash
+find "$HOME/Downloads" -maxdepth 2 -name package.json -path "*AI-Engineering-Coach*" -print
+cd "$(dirname "$(find "$HOME/Downloads" -maxdepth 2 -name package.json -path "*AI-Engineering-Coach*" -print | head -1)")"
+ls package.json
+```
+
+Windows PowerShell:
+
+```powershell
+Get-ChildItem "$env:USERPROFILE\Downloads" -Recurse -Depth 2 -Filter package.json |
+  Where-Object { $_.FullName -like "*AI-Engineering-Coach*" } |
+  Select-Object -First 1 -ExpandProperty DirectoryName |
+  Set-Location
+Test-Path .\package.json
 ```
 
 ## Corporate CLI Install from Source ZIP

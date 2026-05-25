@@ -32,6 +32,7 @@ macOS / Linux / SberOS:
 
 ```bash
 cd ~/Downloads/AI-Engineering-Coach-codex-standalone-cli
+ls package.json
 npm install
 npm run package
 ```
@@ -40,9 +41,12 @@ Windows PowerShell:
 
 ```powershell
 cd "$env:USERPROFILE\Downloads\AI-Engineering-Coach-codex-standalone-cli"
+Test-Path .\package.json
 npm install
 npm run package
 ```
+
+Run `npm install` only from the extracted project folder. If it fails with `ENOENT` and a path such as `/Users/<you>/package.json`, change into the folder that contains this repository's `package.json` first.
 
 This creates:
 
