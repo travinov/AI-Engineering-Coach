@@ -32,6 +32,10 @@ Reads session history from OpenAI's Codex terminal agent. Captures prompts, comp
 
 Parses session logs from the open-source OpenCode terminal tool that supports multiple LLM backends.
 
+## GigaCode
+
+Reads chat JSONL sessions from the GigaCode CLI under `~/.gigacode/projects/*/chats/`. Captures prompts, completions, tool calls, file edits, and token usage when recorded.
+
 ## GitHub Copilot for Xcode
 
 Reads Copilot Chat conversation logs from Apple's Xcode IDE. Sessions are parsed from SQLite databases stored in the GitHub Copilot configuration directory.

@@ -9,6 +9,7 @@ import * as fs from 'fs';
 import { Workspace, Session } from './types';
 import { findClaudeDirs, parseClaudeSessions, parseClaudeSessionsAsync } from './parser-claude';
 import { findCodexDirs, parseCodexSessions } from './parser-codex';
+import { findGigaCodeDirs, parseGigaCodeSessions } from './parser-gigacode';
 import { findOpenCodeDirs, parseOpenCodeSessions } from './parser-opencode';
 
 type WorkspaceMap = Map<string, Workspace>;
@@ -69,6 +70,14 @@ const EXTERNAL_HARNESSES: ExternalHarnessCollector[] = [
       }
     },
   },
+  {
+    name: 'GigaCode',
+    collectSync(ctx) {
+      for (const gcDir of findGigaCodeDirs()) {
+        for (const session of parseGigaCodeSessions(gcDir)) addSession(ctx.workspaces, ctx.sessions, session, gcDir);
+      }
+    },
+  },
 ];
 
 export interface ExternalHarnessProgressHandlers {
@@ -92,6 +101,7 @@ export function collectExternalHarnessesSync(workspaces: WorkspaceMap, sessions:
 export const EXTERNAL_HARNESS_SET = new Set<string>([
   'Claude',
   'Codex',
+  'GigaCode',
   'OpenCode',
 ]);
 

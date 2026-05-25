@@ -325,6 +325,7 @@ export const HARNESS_COLORS: Record<string, string> = {
 
   'Codex': '#10b981',
   'OpenCode': '#8b5cf6',
+  'GigaCode': '#f59e0b',
 };
 
 export function harnessColor(name: string, idx: number): string {
