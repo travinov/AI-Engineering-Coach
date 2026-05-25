@@ -65,6 +65,56 @@ npm install -g .
 ai-engineer-coach summary --harness gigacode
 ```
 
+If `npm install -g .` fails with `EACCES` or `permission denied`, the Node.js global prefix is probably a system directory. Do not use `sudo` on managed corporate machines unless your administrator explicitly requires it.
+
+You can run the CLI directly from the extracted ZIP after `npm run build`:
+
+macOS / Linux / SberOS:
+
+```bash
+node dist/cli.js summary --harness gigacode
+node dist/cli.js summary --harness gigacode --path "$HOME/.gigacode/projects"
+```
+
+Windows PowerShell:
+
+```powershell
+node .\dist\cli.js summary --harness gigacode
+node .\dist\cli.js summary --harness gigacode --path "$env:USERPROFILE\.gigacode\projects"
+```
+
+If you want the `ai-engineer-coach` command without administrator rights, install it into a user-owned npm prefix.
+
+macOS / Linux / SberOS:
+
+```bash
+mkdir -p "$HOME/.local"
+npm install -g . --prefix "$HOME/.local"
+export PATH="$HOME/.local/bin:$PATH"
+hash -r
+ai-engineer-coach summary --harness gigacode
+```
+
+To keep the PATH update for future bash shells:
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bash_profile"
+```
+
+For zsh:
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.zshrc"
+```
+
+Windows PowerShell:
+
+```powershell
+npm install -g . --prefix "$env:USERPROFILE\.local"
+$env:PATH="$env:USERPROFILE\.local;$env:PATH"
+ai-engineer-coach summary --harness gigacode
+```
+
 If GigaCode stores logs in a non-standard location, pass the projects directory explicitly:
 
 macOS / Linux / SberOS:
