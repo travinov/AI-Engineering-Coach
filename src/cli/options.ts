@@ -8,7 +8,7 @@ import * as fs from 'fs';
 import { findGigaCodeDirs } from '../core/parser-gigacode';
 import { CliOutputFormat } from './summary';
 
-export type CliCommand = 'summary' | 'export';
+export type CliCommand = 'summary' | 'export' | 'dashboard';
 export type CliHarness = 'gigacode' | 'all';
 
 export interface CliOptions {
@@ -17,17 +17,18 @@ export interface CliOptions {
   format: CliOutputFormat;
   outFile?: string;
   gigacodeProjectsPath?: string;
+  open?: boolean;
   help?: boolean;
 }
 
-const COMMANDS = new Set(['summary', 'export']);
+const COMMANDS = new Set(['summary', 'export', 'dashboard']);
 const HARNESSES = new Set(['gigacode', 'all']);
 const FORMATS = new Set(['text', 'json', 'markdown']);
 
 export const HELP_TEXT = `AI Engineer Coach CLI
 
 Usage:
-  ai-engineer-coach [summary|export] [options]
+  ai-engineer-coach [summary|export|dashboard] [options]
 
 Options:
   --harness <gigacode|all>   Harness to analyze. Default: gigacode
@@ -35,6 +36,7 @@ Options:
                              Output format. Default: text
   --out <file>               Write output to a file instead of stdout
   --path <dir>               GigaCode projects directory, e.g. ~/.gigacode/projects
+  --open                     Open generated dashboard HTML in the default browser
   --help                     Show this help
 
 Environment:
@@ -83,6 +85,8 @@ export function parseCliArgs(args: string[]): CliOptions {
     } else if (arg === '--path') {
       options.gigacodeProjectsPath = readValue(args, i, arg);
       i++;
+    } else if (arg === '--open') {
+      options.open = true;
     } else {
       throw new Error(`Unknown option: ${arg}`);
     }

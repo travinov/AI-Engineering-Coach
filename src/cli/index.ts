@@ -5,19 +5,32 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+import { spawn } from 'child_process';
+import { renderHtmlDashboard } from './dashboard';
 import { loadCliSessions } from './load';
 import { findExecutableOnPath, getGigaCodeProjectsDirs, HELP_TEXT, parseCliArgs } from './options';
 import { formatCliSummary, summarizeSessions } from './summary';
 
-function writeOutput(output: string, outFile: string | undefined): void {
+function writeOutput(output: string, outFile: string | undefined): string | null {
   if (!outFile) {
     process.stdout.write(output);
-    return;
+    return null;
   }
   const resolved = path.resolve(outFile);
   fs.mkdirSync(path.dirname(resolved), { recursive: true });
   fs.writeFileSync(resolved, output, 'utf-8');
   process.stderr.write(`Wrote ${resolved}\n`);
+  return resolved;
+}
+
+function openFile(filePath: string): void {
+  const command = process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'cmd' : 'xdg-open';
+  const args = process.platform === 'win32' ? ['/c', 'start', '', filePath] : [filePath];
+  const child = spawn(command, args, { detached: true, stdio: 'ignore' });
+  child.on('error', (error) => {
+    process.stderr.write(`Could not open dashboard automatically: ${error.message}\n`);
+  });
+  child.unref();
 }
 
 function writeGigaCodeDiagnostics(sessionsCount: number, explicitPath: boolean): void {
@@ -50,8 +63,14 @@ export function main(argv = process.argv.slice(2)): number {
 
     const sessions = loadCliSessions(options);
     const summary = summarizeSessions(sessions);
-    const output = formatCliSummary(summary, options.format);
-    writeOutput(output, options.outFile);
+    if (options.command === 'dashboard') {
+      const outFile = options.outFile || 'ai-engineer-coach-dashboard.html';
+      const written = writeOutput(renderHtmlDashboard(summary, sessions), outFile);
+      if (options.open && written) openFile(written);
+    } else {
+      const output = formatCliSummary(summary, options.format);
+      writeOutput(output, options.outFile);
+    }
 
     if (options.harness === 'gigacode') {
       const explicitPath = Boolean(options.gigacodeProjectsPath || process.env.AI_ENGINEER_COACH_GIGACODE_PROJECTS);

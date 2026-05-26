@@ -100,6 +100,7 @@ macOS / Linux / SberOS:
 ```bash
 node dist/cli.js summary --harness gigacode
 node dist/cli.js summary --harness gigacode --path "$HOME/.gigacode/projects"
+node dist/cli.js dashboard --harness gigacode --out gigacode-dashboard.html
 ```
 
 Windows PowerShell:
@@ -107,6 +108,7 @@ Windows PowerShell:
 ```powershell
 node .\dist\cli.js summary --harness gigacode
 node .\dist\cli.js summary --harness gigacode --path "$env:USERPROFILE\.gigacode\projects"
+node .\dist\cli.js dashboard --harness gigacode --out gigacode-dashboard.html
 ```
 
 If you want the `ai-engineer-coach` command without administrator rights, install it into a user-owned npm prefix.
@@ -119,6 +121,7 @@ npm install -g . --prefix "$HOME/.local"
 export PATH="$HOME/.local/bin:$PATH"
 hash -r
 ai-engineer-coach summary --harness gigacode
+ai-engineer-coach dashboard --harness gigacode --out gigacode-dashboard.html
 ```
 
 To keep the PATH update for future bash shells:
@@ -139,6 +142,7 @@ Windows PowerShell:
 npm install -g . --prefix "$env:USERPROFILE\.local"
 $env:PATH="$env:USERPROFILE\.local;$env:PATH"
 ai-engineer-coach summary --harness gigacode
+ai-engineer-coach dashboard --harness gigacode --out gigacode-dashboard.html
 ```
 
 If GigaCode stores logs in a non-standard location, pass the projects directory explicitly:
@@ -162,6 +166,7 @@ macOS / Linux / SberOS:
 ```bash
 export AI_ENGINEER_COACH_GIGACODE_PROJECTS="$HOME/.gigacode/projects"
 ai-engineer-coach summary --harness gigacode
+ai-engineer-coach dashboard --harness gigacode --out gigacode-dashboard.html
 ```
 
 Windows PowerShell:
@@ -208,6 +213,48 @@ ai-engineer-coach summary --harness gigacode
 ```
 
 The `.tgz` package includes the built CLI entrypoint `dist/cli.js`, so the corporate machine does not need to run `npm install` against the internet.
+
+## Standalone HTML Dashboard
+
+The CLI can generate a local HTML dashboard without VS Code:
+
+macOS / Linux / SberOS:
+
+```bash
+ai-engineer-coach dashboard --harness gigacode --out gigacode-dashboard.html
+open gigacode-dashboard.html
+```
+
+Windows PowerShell:
+
+```powershell
+ai-engineer-coach dashboard --harness gigacode --out gigacode-dashboard.html
+start .\gigacode-dashboard.html
+```
+
+If the CLI is not globally installed, run it through Node from the extracted project folder:
+
+macOS / Linux / SberOS:
+
+```bash
+node dist/cli.js dashboard --harness gigacode --out gigacode-dashboard.html
+open gigacode-dashboard.html
+```
+
+Windows PowerShell:
+
+```powershell
+node .\dist\cli.js dashboard --harness gigacode --out gigacode-dashboard.html
+start .\gigacode-dashboard.html
+```
+
+To open the generated file automatically:
+
+```bash
+ai-engineer-coach dashboard --harness gigacode --out gigacode-dashboard.html --open
+```
+
+The HTML dashboard is self-contained. It embeds its styles and summary data in the file, so it does not need internet access, a local server, or VS Code.
 
 ## Corporate VS Code Extension Install
 
@@ -274,6 +321,7 @@ The same package also builds a standalone Node.js CLI for environments where ope
 ```bash
 npm run build
 node dist/cli.js summary --harness gigacode
+node dist/cli.js dashboard --harness gigacode --out gigacode-dashboard.html
 ```
 
 To install the CLI command from a local checkout:
@@ -281,6 +329,7 @@ To install the CLI command from a local checkout:
 ```bash
 npm install -g .
 ai-engineer-coach summary --harness gigacode
+ai-engineer-coach dashboard --harness gigacode --out gigacode-dashboard.html
 ```
 
 By default, the CLI reads GigaCode sessions from the standard projects directory:

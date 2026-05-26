@@ -28,6 +28,15 @@ describe('CLI options', () => {
     });
   });
 
+  it('parses dashboard command with output file and open flag', () => {
+    expect(parseCliArgs(['dashboard', '--harness', 'gigacode', '--out', 'gigacode-dashboard.html', '--open'])).toMatchObject({
+      command: 'dashboard',
+      harness: 'gigacode',
+      outFile: 'gigacode-dashboard.html',
+      open: true,
+    });
+  });
+
   it('uses an explicit GigaCode projects path before environment defaults', () => {
     expect(getGigaCodeProjectsDirs({
       command: 'summary',

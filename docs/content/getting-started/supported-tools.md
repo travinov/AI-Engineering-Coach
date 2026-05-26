@@ -40,12 +40,14 @@ The standalone CLI also supports explicit GigaCode log discovery:
 
 ```bash
 ai-engineer-coach summary --harness gigacode --path ~/.gigacode/projects
+ai-engineer-coach dashboard --harness gigacode --path ~/.gigacode/projects --out gigacode-dashboard.html
 ```
 
 On Windows, use the matching user profile path:
 
 ```powershell
 ai-engineer-coach summary --harness gigacode --path "$env:USERPROFILE\.gigacode\projects"
+ai-engineer-coach dashboard --harness gigacode --path "$env:USERPROFILE\.gigacode\projects" --out gigacode-dashboard.html
 ```
 
 ## GitHub Copilot for Xcode
