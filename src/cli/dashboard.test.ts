@@ -73,6 +73,24 @@ describe('renderHtmlDashboard', () => {
     expect(html).toContain('<script id="dashboard-data" type="application/json">');
   });
 
+  it('renders the same main tool sections as the VS Code dashboard', () => {
+    const sessions = [session({})];
+    const html = renderHtmlDashboard(summarizeSessions(sessions), sessions);
+
+    expect(html).toContain('Наблюдение');
+    expect(html).toContain('Таймлайн');
+    expect(html).toContain('Моменты кодинга');
+    expect(html).toContain('Метрики');
+    expect(html).toContain('Результат');
+    expect(html).toContain('Паттерны');
+    expect(html).toContain('Улучшение');
+    expect(html).toContain('Антипаттерны');
+    expect(html).toContain('Поиск навыков');
+    expect(html).toContain('Качество контекста');
+    expect(html).toContain('Развитие');
+    expect(html).toContain('Agentic SDLC');
+  });
+
   it('escapes log-derived text before writing HTML', () => {
     const sessions = [session({
       workspaceName: '<script>alert(1)</script>',
