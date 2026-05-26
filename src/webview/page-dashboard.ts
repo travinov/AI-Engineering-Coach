@@ -32,6 +32,14 @@ const DASHBOARD_LANGUAGE_LABELS: Record<string, string> = {
   plaintext: 'Plain Text',
 };
 
+const DASHBOARD_PRACTICE_GROUPS: Partial<Record<GroupScore['group'], string>> = {
+  'prompt-quality': 'Качество prompt',
+  'session-hygiene': 'Гигиена сессий',
+  'code-review': 'Code review',
+  'tool-mastery': 'Владение инструментами',
+  'context-management': 'Управление контекстом',
+};
+
 function SkillCard({ title, subtitle }: { title: string; subtitle: string }) {
   return html`<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;background:var(--bg-secondary, #0d1117);">
     <span style=${'flex-shrink:0;width:6px;height:6px;border-radius:50%;background:' + COLORS.blue + ';'}></span>
@@ -43,11 +51,11 @@ function SkillCard({ title, subtitle }: { title: string; subtitle: string }) {
 }
 
 function funScoreLabel(score: number): string {
-  if (score >= 90) return 'Merge Wizard';
-  if (score >= 75) return 'Ship Goblin Deluxe';
-  if (score >= 60) return 'Vibe Refactor Gremlin';
-  if (score >= 40) return 'Rubber Duck Ringleader';
-  return 'Stack Trace Survivor';
+  if (score >= 90) return 'Мастер релизов';
+  if (score >= 75) return 'Уверенный инженер';
+  if (score >= 60) return 'Практик рефакторинга';
+  if (score >= 40) return 'Отладчик в процессе';
+  return 'Нужна настройка практик';
 }
 
 function normalizeDashboardLanguage(label: string): string {
@@ -63,7 +71,7 @@ function prettyDashboardLanguage(label: string): string {
 
 function PracticeCard({ g }: { g: GroupScore }) {
   const color = scoreColor(g.score);
-  const name = PRACTICE_GROUPS[g.group];
+  const name = DASHBOARD_PRACTICE_GROUPS[g.group] || PRACTICE_GROUPS[g.group];
   return html`
     <a href="#" data-page="anti-patterns" data-nav-hint=${g.group} class="ap-score-card" style="text-decoration:none;color:inherit;cursor:pointer;">
       <div class="ap-score-card-top">
@@ -78,7 +86,7 @@ function PracticeCard({ g }: { g: GroupScore }) {
         ? html`<div class="ap-score-tip ap-improvements">${g.improvements.slice(0, 2).map(i => html`<span>${i}</span>`)}</div>`
         : g.topIssue
           ? html`<div class="ap-score-tip">${g.topIssue}</div>`
-          : html`<div class="ap-score-tip muted">${g.patternCount > 0 ? g.patternCount + ' finding' + (g.patternCount !== 1 ? 's' : '') : 'No issues detected'}</div>`}
+          : html`<div class="ap-score-tip muted">${g.patternCount > 0 ? g.patternCount + ' находок' : 'Проблемы не найдены'}</div>`}
     </a>`;
 }
 
@@ -106,7 +114,7 @@ function renderDashboardMarkup(
           <div class="dash-score-ring"><${ScoreRing} score=${overallScore} color=${overallColor} size=${64} /></div>
           <div class="dash-identity-info">
             <div class="dash-identity-label">${funScoreLabel(overallScore)}</div>
-            <div class="dash-identity-sub">${scores.length > 0 ? 'Dashboard vibes sampled across ' + scores.length + ' dimensions' : 'Calibrating the dashboard vibes...'}</div>
+            <div class="dash-identity-sub">${scores.length > 0 ? 'Сводный индекс рассчитан по ' + scores.length + ' направлениям' : 'Калибруем дашборд...'}</div>
           </div>
         </div>
         ${langs.length > 0 && html`
@@ -116,20 +124,20 @@ function renderDashboardMarkup(
       </div>
       <div class="dash-hero-right">
         <div class="dash-hero-stats">
-          <div class="dash-stat"><div class="dash-stat-val">${formatNum(totalReqs)}</div><div class="dash-stat-lbl">Requests</div></div>
-          <div class="dash-stat"><div class="dash-stat-val">${formatNum(totalSessions)}</div><div class="dash-stat-lbl">Sessions</div></div>
+          <div class="dash-stat"><div class="dash-stat-val">${formatNum(totalReqs)}</div><div class="dash-stat-lbl">Запросы</div></div>
+          <div class="dash-stat"><div class="dash-stat-val">${formatNum(totalSessions)}</div><div class="dash-stat-lbl">Сессии</div></div>
           <div class="dash-stat"><div class="dash-stat-val">${formatNum(totalLoc)}</div><div class="dash-stat-lbl">AI LoC</div></div>
-          <div class="dash-stat"><div class="dash-stat-val">${stats.totalWorkspaces}</div><div class="dash-stat-lbl">Workspaces</div></div>
+          <div class="dash-stat"><div class="dash-stat-val">${stats.totalWorkspaces}</div><div class="dash-stat-lbl">Рабочие области</div></div>
         </div>
         ${harnesses.length > 0 && html`<div class="dash-harnesses dash-harnesses-right">${harnesses.map((h, i) => html`<span class="dash-harness-tag" style=${'border-color:' + harnessColor(h, i) + ';color:' + harnessColor(h, i)}>${h}</span>`)}</div>`}
       </div>
     </div>
-    ${!FF_TOKEN_REPORTING_ENABLED && html`<div class="dash-info-banner"><span class="dash-info-icon">\u2139</span><div><strong>Token Usage & Burndown temporarily hidden</strong><p>These features are disabled until we can verify that reported numbers align with GitHub's billing data. They will be re-enabled once validated.</p></div></div>`}
-    ${scores.length > 0 && html`<section class="dash-section"><div class="dash-section-header"><h3>Anti-Patterns Summary</h3><a href="#" data-page="anti-patterns" style=${'font-size:12px;color:' + COLORS.blue + ';text-decoration:none;'}>View All Anti-Patterns \u2192</a></div><div class="ap-score-grid">${scores.map(g => html`<${PracticeCard} g=${g} />`)}</div></section>`}
-    <section class="dash-section"><div class="dash-section-header"><h3>Skill Finder</h3><a href="#" data-page="skills" style=${'font-size:12px;color:' + COLORS.blue + ';text-decoration:none;'}>Open Full View \u2192</a></div><p class="dash-section-desc">Scans your prompt history for repeated patterns that waste time re-explaining the same tasks.</p><div id="dashSkillContent" class="dash-card">${!skillCache && html`<div style="text-align:center;"><p style="color:var(--text-muted);margin:0 0 12px 0;font-size:13px;">Analyze your prompt history to discover skill opportunities.</p><button id="dashScanBtn" class="dash-scan-btn">Scan for Skills</button></div>`}</div></section>
-    <section class="dash-section"><div style="display:flex;align-items:baseline;gap:16px;margin-bottom:8px;flex-wrap:wrap;"><h3 style="margin:0;">Daily Activity</h3><div id="activityTabs" class="dash-tabs"><button class=${'dash-tab' + (activeMetric === 'requests' ? ' dash-tab-active' : '')} data-metric="requests">Requests <strong>${formatNum(totalReqs)}</strong></button><button class=${'dash-tab' + (activeMetric === 'sessions' ? ' dash-tab-active' : '')} data-metric="sessions">Sessions <strong>${formatNum(totalSessions)}</strong></button><button class=${'dash-tab' + (activeMetric === 'loc' ? ' dash-tab-active' : '')} data-metric="loc">LoC <strong>${formatNum(totalLoc)}</strong></button><button class=${'dash-tab' + (activeMetric === 'workspaces' ? ' dash-tab-active' : '')} data-metric="workspaces">Workspaces <strong>${formatNum(stats.totalWorkspaces)}</strong></button></div></div><${CanvasEl} id="dailyChart" height=${160} /></section>
-    <div class="two-col" style="margin-bottom:16px;"><${CanvasEl} id="wsChart" height=${140} title="Top Workspaces by Requests" /><${CanvasEl} id="harnessChart" height=${140} title="Requests by Harness" /></div>
-    <div class="chart-modal-overlay" id="wsChartModal"><div class="chart-modal"><div class="chart-modal-header"><span class="chart-title" style="margin:0;">Top Workspaces by Requests</span><button class="chart-modal-close" id="wsChartModalClose" title="Close">\u00d7</button></div><div class="chart-modal-body"><div style="position:relative;height:360px;"><canvas id="wsChartFull"></canvas></div></div></div></div>
+    ${!FF_TOKEN_REPORTING_ENABLED && html`<div class="dash-info-banner"><span class="dash-info-icon">\u2139</span><div><strong>Token Usage и Burndown временно скрыты</strong><p>Эти разделы отключены, пока показатели не будут сверены с billing-данными GitHub. После проверки они будут включены снова.</p></div></div>`}
+    ${scores.length > 0 && html`<section class="dash-section"><div class="dash-section-header"><h3>Сводка антипаттернов</h3><a href="#" data-page="anti-patterns" style=${'font-size:12px;color:' + COLORS.blue + ';text-decoration:none;'}>Открыть все антипаттерны \u2192</a></div><div class="ap-score-grid">${scores.map(g => html`<${PracticeCard} g=${g} />`)}</div></section>`}
+    <section class="dash-section"><div class="dash-section-header"><h3>Поиск навыков</h3><a href="#" data-page="skills" style=${'font-size:12px;color:' + COLORS.blue + ';text-decoration:none;'}>Открыть полный вид \u2192</a></div><p class="dash-section-desc">Ищет повторяющиеся prompt-паттерны, из-за которых приходится заново объяснять одни и те же задачи.</p><div id="dashSkillContent" class="dash-card">${!skillCache && html`<div style="text-align:center;"><p style="color:var(--text-muted);margin:0 0 12px 0;font-size:13px;">Проанализируйте историю prompt, чтобы найти возможности для навыков.</p><button id="dashScanBtn" class="dash-scan-btn">Найти навыки</button></div>`}</div></section>
+    <section class="dash-section"><div style="display:flex;align-items:baseline;gap:16px;margin-bottom:8px;flex-wrap:wrap;"><h3 style="margin:0;">Активность по дням</h3><div id="activityTabs" class="dash-tabs"><button class=${'dash-tab' + (activeMetric === 'requests' ? ' dash-tab-active' : '')} data-metric="requests">Запросы <strong>${formatNum(totalReqs)}</strong></button><button class=${'dash-tab' + (activeMetric === 'sessions' ? ' dash-tab-active' : '')} data-metric="sessions">Сессии <strong>${formatNum(totalSessions)}</strong></button><button class=${'dash-tab' + (activeMetric === 'loc' ? ' dash-tab-active' : '')} data-metric="loc">LoC <strong>${formatNum(totalLoc)}</strong></button><button class=${'dash-tab' + (activeMetric === 'workspaces' ? ' dash-tab-active' : '')} data-metric="workspaces">Рабочие области <strong>${formatNum(stats.totalWorkspaces)}</strong></button></div></div><${CanvasEl} id="dailyChart" height=${160} /></section>
+    <div class="two-col" style="margin-bottom:16px;"><${CanvasEl} id="wsChart" height=${140} title="Топ рабочих областей по запросам" /><${CanvasEl} id="harnessChart" height=${140} title="Запросы по harness" /></div>
+    <div class="chart-modal-overlay" id="wsChartModal"><div class="chart-modal"><div class="chart-modal-header"><span class="chart-title" style="margin:0;">Топ рабочих областей по запросам</span><button class="chart-modal-close" id="wsChartModalClose" title="Закрыть">\u00d7</button></div><div class="chart-modal-body"><div style="position:relative;height:360px;"><canvas id="wsChartFull"></canvas></div></div></div></div>
   `, container);
 }
 
@@ -250,18 +258,18 @@ export async function renderDashboard(container: HTMLElement, currentFilter: Dat
     if (isWorkspaces) {
       // Workspaces: single dataset, not stacked
       chartDatasets = [{
-        label: 'Active Workspaces',
+        label: 'Активные рабочие области',
         data: daily.workspaces,
         backgroundColor: COLORS.blue + 'B3',
         borderColor: COLORS.blue,
         borderWidth: 1,
       }];
-      metricLabel = 'Workspaces';
+      metricLabel = 'Рабочие области';
       stacked = false;
     } else {
       // Requests, Sessions, LoC: stacked by harness
       const metricKey = activeMetric as 'requests' | 'sessions' | 'loc';
-      metricLabel = { requests: 'Requests', sessions: 'Sessions', loc: 'Lines of Code' }[metricKey];
+      metricLabel = { requests: 'Запросы', sessions: 'Сессии', loc: 'Строки кода' }[metricKey];
       chartDatasets = daily.byHarness.map((h, i) => {
         const color = harnessColor(h.harness, i);
         return {
@@ -326,38 +334,38 @@ function renderSkillResults(
   const hasCatalog = catTop.length > 0;
 
   if (!hasCustom && !hasCatalog) {
-    render(html`<p style="color:var(--text-muted);margin:0;font-size:13px;">No skill opportunities found. Your prompts may already be well-served or too diverse.</p>
-      <div style="text-align:center;margin-top:10px;"><a href="#" data-page="skills" style=${'font-size:12px;color:' + COLORS.blue + ';text-decoration:none;'}>Open Skill Finder for full analysis \u2192</a></div>`, contentEl);
+    render(html`<p style="color:var(--text-muted);margin:0;font-size:13px;">Возможности для навыков не найдены. Prompt уже могут быть достаточно разнообразными или хорошо покрытыми.</p>
+      <div style="text-align:center;margin-top:10px;"><a href="#" data-page="skills" style=${'font-size:12px;color:' + COLORS.blue + ';text-decoration:none;'}>Открыть полный анализ в поиске навыков \u2192</a></div>`, contentEl);
     return;
   }
 
   render(html`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
       <div>
-        <div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;">Custom Opportunities</div>
+        <div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;">Собственные возможности</div>
         ${hasCustom
           ? html`<div style="display:flex;flex-direction:column;gap:4px;">
               ${strong.map(t => {
                 const cluster = clusters.find(c => c.id === t.id);
-                const sub = cluster ? cluster.occurrences + ' repetitions / ' + cluster.sessions + ' sessions' : t.reason.substring(0, 80);
+                const sub = cluster ? cluster.occurrences + ' повторов / ' + cluster.sessions + ' сессий' : t.reason.substring(0, 80);
                 return html`<${SkillCard} title=${t.suggestedSkillName || t.label} subtitle=${sub} />`;
               })}
-              ${triaged.filter(t => t.verdict === 'strong').length > 2 && html`<div style="font-size:11px;color:var(--text-muted);text-align:center;">+${triaged.filter(t => t.verdict === 'strong').length - 2} more</div>`}
+              ${triaged.filter(t => t.verdict === 'strong').length > 2 && html`<div style="font-size:11px;color:var(--text-muted);text-align:center;">+${triaged.filter(t => t.verdict === 'strong').length - 2} еще</div>`}
             </div>`
-          : html`<p style="color:var(--text-muted);margin:0;font-size:12px;">None detected</p>`}
+          : html`<p style="color:var(--text-muted);margin:0;font-size:12px;">Не найдено</p>`}
       </div>
       <div>
-        <div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;">Community Matches</div>
+        <div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;">Совпадения из каталога</div>
         ${hasCatalog
           ? html`<div style="display:flex;flex-direction:column;gap:4px;">
               ${catTop.map(item => html`<${SkillCard} title=${item.title} subtitle=${item.description?.substring(0, 80) || item.kind} />`)}
-              ${catalogMatches.length > 2 && html`<div style="font-size:11px;color:var(--text-muted);text-align:center;">+${catalogMatches.length - 2} more</div>`}
+              ${catalogMatches.length > 2 && html`<div style="font-size:11px;color:var(--text-muted);text-align:center;">+${catalogMatches.length - 2} еще</div>`}
             </div>`
-          : html`<p style="color:var(--text-muted);margin:0;font-size:12px;">None matched</p>`}
+          : html`<p style="color:var(--text-muted);margin:0;font-size:12px;">Совпадений нет</p>`}
       </div>
     </div>
     <div style="text-align:center;margin-top:10px;">
-      <a href="#" data-page="skills" style=${'font-size:12px;color:' + COLORS.blue + ';text-decoration:none;'}>Explore details in Skill Finder \u2192</a>
+      <a href="#" data-page="skills" style=${'font-size:12px;color:' + COLORS.blue + ';text-decoration:none;'}>Посмотреть детали в поиске навыков \u2192</a>
     </div>`, contentEl);
 }
 
@@ -369,7 +377,7 @@ async function loadDashSkills(currentFilter: DateFilter): Promise<void> {
 
   render(html`<div style="text-align:center;padding:8px;">
     <div class="loading-spinner" style="width:24px;height:24px;margin:0 auto 8px;"></div>
-    <p style="color:var(--text-muted);margin:0;font-size:12px;">Scanning prompt history...</p>
+    <p style="color:var(--text-muted);margin:0;font-size:12px;">Сканируем историю prompt...</p>
   </div>`, contentEl);
 
   try {
@@ -380,7 +388,7 @@ async function loadDashSkills(currentFilter: DateFilter): Promise<void> {
     let catalogMatches: import('../core/types').CatalogItem[] = [];
 
     if (clusters.length > 0) {
-      contentEl.querySelector('p')!.textContent = 'AI triage in progress...';
+      contentEl.querySelector('p')!.textContent = 'AI-анализ в процессе...';
       const top = clusters.slice(0, 20);
       const topClusters = top.map(c => ({
         id: c.id, label: c.label, occurrences: c.occurrences,
@@ -402,7 +410,7 @@ async function loadDashSkills(currentFilter: DateFilter): Promise<void> {
 
       // Triage catalog if available
       if (catResult?.items && catResult.items.length > 0) {
-        contentEl.querySelector('p')!.textContent = 'Matching community catalog...';
+        contentEl.querySelector('p')!.textContent = 'Ищем совпадения в каталоге...';
         try {
           const triaged = await rpc<CatalogTriageResult>('triageCatalog', {
             items: catResult.items,
@@ -419,6 +427,6 @@ async function loadDashSkills(currentFilter: DateFilter): Promise<void> {
     setSkillCache({ clusters, triaged: triagedResults, catalogMatches, timestamp: Date.now() }, currentFilter);
     renderSkillResults(triagedResults, clusters, catalogMatches);
   } catch {
-    render(html`<p style="color:var(--text-muted);margin:0;font-size:13px;">Scan failed. Try again later.</p>`, contentEl);
+    render(html`<p style="color:var(--text-muted);margin:0;font-size:13px;">Сканирование не удалось. Попробуйте позже.</p>`, contentEl);
   }
 }

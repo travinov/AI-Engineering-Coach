@@ -8,6 +8,8 @@ description: "Build and install the extension from source"
 
 The extension is not yet published on the VS Code Marketplace. Install it by building a `.vsix` package from source.
 
+This branch is intended for a Russian corporate build. The default VS Code extension UI, CLI help, CLI summary, and standalone HTML dashboard are Russian. There is no language switcher.
+
 ## Corporate Installation Overview
 
 Corporate environments usually fall into one of two cases:
@@ -21,22 +23,22 @@ For the VS Code dashboard path, see [VS Code Installation]({{< ref "getting-star
 
 ## Download the GitHub ZIP
 
-Download the ZIP only after the branch or release you need has been pushed to GitHub. For the GigaCode standalone CLI branch, use:
+Download the ZIP only after the branch or release you need has been pushed to GitHub. For the Russian corporate build branch, use:
 
 ```text
-https://github.com/travinov/AI-Engineering-Coach/archive/refs/heads/codex/standalone-cli.zip
+https://github.com/travinov/AI-Engineering-Coach/archive/refs/heads/codex/russian-localization.zip
 ```
 
 Unzip it, then open a terminal in the extracted directory. GitHub usually extracts this branch as:
 
 ```text
-AI-Engineering-Coach-codex-standalone-cli
+AI-Engineering-Coach-codex-russian-localization
 ```
 
 On macOS / Linux / SberOS:
 
 ```bash
-cd ~/Downloads/AI-Engineering-Coach-codex-standalone-cli
+cd ~/Downloads/AI-Engineering-Coach-codex-russian-localization
 pwd
 ls package.json
 ```
@@ -44,7 +46,7 @@ ls package.json
 On Windows PowerShell:
 
 ```powershell
-cd "$env:USERPROFILE\Downloads\AI-Engineering-Coach-codex-standalone-cli"
+cd "$env:USERPROFILE\Downloads\AI-Engineering-Coach-codex-russian-localization"
 Get-Location
 Test-Path .\package.json
 ```
@@ -360,6 +362,12 @@ After installation, open the Command Palette and run:
 
 ```
 AI Engineer Coach: Open Dashboard
+```
+
+For the Russian corporate build, the command is:
+
+```text
+AI Engineer Coach: Открыть дашборд
 ```
 
 You can also click the AI Engineer Coach icon in the Activity Bar (sidebar) if it appears there.

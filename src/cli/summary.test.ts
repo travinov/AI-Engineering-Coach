@@ -108,12 +108,12 @@ describe('CLI summary', () => {
   it('formats text summaries for CLI output', () => {
     const output = formatCliSummary(summarizeSessions([session({})]), 'text');
 
-    expect(output).toContain('AI Engineer Coach CLI Summary');
-    expect(output).toContain('Sessions: 1');
-    expect(output).toContain('Requests: 2');
-    expect(output).toContain('Prompt tokens: 200');
-    expect(output).toContain('GigaCode: 1 sessions, 2 requests');
-    expect(output).toContain('project: 1 sessions, 2 requests');
+    expect(output).toContain('Сводка AI Engineer Coach CLI');
+    expect(output).toContain('Сессии: 1');
+    expect(output).toContain('Запросы: 2');
+    expect(output).toContain('Токены prompt: 200');
+    expect(output).toContain('GigaCode: 1 сессий, 2 запросов');
+    expect(output).toContain('project: 1 сессий, 2 запросов');
   });
 
   it('formats JSON summaries for machine consumption', () => {

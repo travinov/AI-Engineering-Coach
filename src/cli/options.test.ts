@@ -7,7 +7,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
 import { describe, expect, it } from 'vitest';
-import { findExecutableOnPath, getGigaCodeProjectsDirs, parseCliArgs } from './options';
+import { findExecutableOnPath, getGigaCodeProjectsDirs, HELP_TEXT, parseCliArgs } from './options';
 
 describe('CLI options', () => {
   it('defaults to a GigaCode summary in text format', () => {
@@ -35,6 +35,12 @@ describe('CLI options', () => {
       outFile: 'gigacode-dashboard.html',
       open: true,
     });
+  });
+
+  it('shows Russian corporate CLI help by default', () => {
+    expect(HELP_TEXT).toContain('AI Engineer Coach CLI');
+    expect(HELP_TEXT).toContain('Анализируемый harness');
+    expect(HELP_TEXT).toContain('Открыть HTML-дашборд');
   });
 
   it('uses an explicit GigaCode projects path before environment defaults', () => {

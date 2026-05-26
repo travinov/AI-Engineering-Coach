@@ -27,21 +27,21 @@ const FORMATS = new Set(['text', 'json', 'markdown']);
 
 export const HELP_TEXT = `AI Engineer Coach CLI
 
-Usage:
+Использование:
   ai-engineer-coach [summary|export|dashboard] [options]
 
-Options:
-  --harness <gigacode|all>   Harness to analyze. Default: gigacode
+Параметры:
+  --harness <gigacode|all>   Анализируемый harness. По умолчанию: gigacode
   --format <text|json|markdown>
-                             Output format. Default: text
-  --out <file>               Write output to a file instead of stdout
-  --path <dir>               GigaCode projects directory, e.g. ~/.gigacode/projects
-  --open                     Open generated dashboard HTML in the default browser
-  --help                     Show this help
+                             Формат вывода. По умолчанию: text
+  --out <file>               Записать результат в файл вместо stdout
+  --path <dir>               Каталог проектов GigaCode, например ~/.gigacode/projects
+  --open                     Открыть HTML-дашборд в браузере по умолчанию
+  --help                     Показать эту справку
 
-Environment:
+Переменные окружения:
   AI_ENGINEER_COACH_GIGACODE_PROJECTS
-                             Default GigaCode projects directory for non-interactive setup
+                             Каталог проектов GigaCode для неинтерактивной установки
 `;
 
 function readValue(args: string[], index: number, flag: string): string {

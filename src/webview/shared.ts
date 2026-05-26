@@ -378,15 +378,15 @@ export function scoreColor(score: number): string {
 
 export function scoreLabel(score: number, variant: 'dashboard' | 'antipatterns' = 'dashboard'): string {
   if (variant === 'antipatterns') {
-    if (score >= SCORE_EXCELLENT) return 'Great';
-    if (score >= SCORE_GOOD) return 'Good';
-    if (score >= SCORE_FAIR) return 'Fair';
-    return 'Needs Work';
+    if (score >= SCORE_EXCELLENT) return 'Отлично';
+    if (score >= SCORE_GOOD) return 'Хорошо';
+    if (score >= SCORE_FAIR) return 'Средне';
+    return 'Нужно улучшить';
   }
-  if (score >= SCORE_EXCELLENT) return 'Excellent';
-  if (score >= SCORE_GOOD) return 'Good';
-  if (score >= SCORE_FAIR) return 'Needs Work';
-  return 'Critical';
+  if (score >= SCORE_EXCELLENT) return 'Отлично';
+  if (score >= SCORE_GOOD) return 'Хорошо';
+  if (score >= SCORE_FAIR) return 'Нужно улучшить';
+  return 'Критично';
 }
 
 export function ringHtml(score: number, color: string, size: number): string {

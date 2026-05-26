@@ -27,7 +27,7 @@ function safeJson(value: unknown): string {
 }
 
 function groupRows(groups: CliSummaryGroup[]): string {
-  if (groups.length === 0) return '<tr><td colspan="3" class="muted">No data</td></tr>';
+  if (groups.length === 0) return '<tr><td colspan="3" class="muted">Нет данных</td></tr>';
   return groups.map(group => `
     <tr>
       <td>${escapeHtml(group.name)}</td>
@@ -38,7 +38,7 @@ function groupRows(groups: CliSummaryGroup[]): string {
 }
 
 function itemRows(items: CliSummaryItem[]): string {
-  if (items.length === 0) return '<tr><td colspan="2" class="muted">No data</td></tr>';
+  if (items.length === 0) return '<tr><td colspan="2" class="muted">Нет данных</td></tr>';
   return items.map(item => `
     <tr>
       <td>${escapeHtml(item.name)}</td>
@@ -52,7 +52,7 @@ function recentSessionRows(sessions: Session[]): string {
     .sort((a, b) => (b.lastMessageDate || 0) - (a.lastMessageDate || 0))
     .slice(0, 25);
 
-  if (recent.length === 0) return '<tr><td colspan="5" class="muted">No sessions found</td></tr>';
+  if (recent.length === 0) return '<tr><td colspan="5" class="muted">Сессии не найдены</td></tr>';
   return recent.map(session => {
     const firstRequest = session.requests[0];
     const date = session.lastMessageDate ? new Date(session.lastMessageDate).toLocaleString() : '';
@@ -92,11 +92,11 @@ export function renderHtmlDashboard(summary: CliSummary, sessions: Session[]): s
   };
 
   return `<!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI Engineer Coach Dashboard</title>
+  <title>Дашборд AI Engineer Coach</title>
   <style>
     :root {
       color-scheme: light;
@@ -219,68 +219,68 @@ export function renderHtmlDashboard(summary: CliSummary, sessions: Session[]): s
   <main>
     <header>
       <div>
-        <h1>AI Engineer Coach Dashboard</h1>
+        <h1>Дашборд AI Engineer Coach</h1>
         <div class="subtitle">
-          <span class="pill">${summary.byHarness.map(h => escapeHtml(h.name)).join('</span><span class="pill">') || 'No harness data'}</span>
-          Local HTML report generated from parsed session logs.
+          <span class="pill">${summary.byHarness.map(h => escapeHtml(h.name)).join('</span><span class="pill">') || 'Нет данных по harness'}</span>
+          Локальный HTML-отчет по разобранным логам сессий.
         </div>
       </div>
-      <div class="generated">Generated: ${escapeHtml(summary.generatedAt)}</div>
+      <div class="generated">Сформировано: ${escapeHtml(summary.generatedAt)}</div>
     </header>
 
     <div class="stats">
-      ${statCard('Sessions', summary.totals.sessions)}
-      ${statCard('Requests', summary.totals.requests)}
-      ${statCard('Workspaces', summary.totals.workspaces)}
-      ${statCard('Edited files', summary.totals.editedFiles)}
-      ${statCard('Tool calls', summary.totals.tools)}
-      ${statCard('AI lines of code', summary.totals.aiLinesOfCode)}
-      ${statCard('Prompt tokens', summary.totals.promptTokens)}
-      ${statCard('Completion tokens', summary.totals.completionTokens)}
+      ${statCard('Сессии', summary.totals.sessions)}
+      ${statCard('Запросы', summary.totals.requests)}
+      ${statCard('Рабочие области', summary.totals.workspaces)}
+      ${statCard('Измененные файлы', summary.totals.editedFiles)}
+      ${statCard('Вызовы инструментов', summary.totals.tools)}
+      ${statCard('Строки кода от AI', summary.totals.aiLinesOfCode)}
+      ${statCard('Токены prompt', summary.totals.promptTokens)}
+      ${statCard('Токены completion', summary.totals.completionTokens)}
     </div>
 
     <div class="grid">
       <section>
-        <h2>By Harness</h2>
+        <h2>По Harness</h2>
         <table>
-          <thead><tr><th>Harness</th><th>Sessions</th><th>Requests</th></tr></thead>
+          <thead><tr><th>Harness</th><th>Сессии</th><th>Запросы</th></tr></thead>
           <tbody>${groupRows(summary.byHarness)}</tbody>
         </table>
       </section>
       <section>
-        <h2>Top Workspaces</h2>
+        <h2>Топ рабочих областей</h2>
         <table>
-          <thead><tr><th>Workspace</th><th>Sessions</th><th>Requests</th></tr></thead>
+          <thead><tr><th>Рабочая область</th><th>Сессии</th><th>Запросы</th></tr></thead>
           <tbody>${groupRows(summary.topWorkspaces)}</tbody>
         </table>
       </section>
       <section>
-        <h2>Top Tools</h2>
+        <h2>Топ инструментов</h2>
         <table>
-          <thead><tr><th>Tool</th><th>Calls</th></tr></thead>
+          <thead><tr><th>Инструмент</th><th>Вызовы</th></tr></thead>
           <tbody>${itemRows(summary.topTools)}</tbody>
         </table>
       </section>
       <section>
-        <h2>Top Edited Files</h2>
+        <h2>Топ измененных файлов</h2>
         <table>
-          <thead><tr><th>File</th><th>Edits</th></tr></thead>
+          <thead><tr><th>Файл</th><th>Правки</th></tr></thead>
           <tbody>${itemRows(summary.topEditedFiles)}</tbody>
         </table>
       </section>
       <section>
-        <h2>Models</h2>
+        <h2>Модели</h2>
         <table>
-          <thead><tr><th>Model</th><th>Requests</th></tr></thead>
+          <thead><tr><th>Модель</th><th>Запросы</th></tr></thead>
           <tbody>${itemRows(summary.models)}</tbody>
         </table>
       </section>
     </div>
 
     <section class="wide">
-      <h2>Recent Sessions</h2>
+      <h2>Последние сессии</h2>
       <table>
-        <thead><tr><th>Last activity</th><th>Harness</th><th>Workspace</th><th>Requests</th><th>First prompt</th></tr></thead>
+        <thead><tr><th>Последняя активность</th><th>Harness</th><th>Рабочая область</th><th>Запросы</th><th>Первый prompt</th></tr></thead>
         <tbody>${recentSessionRows(sessions)}</tbody>
       </table>
     </section>

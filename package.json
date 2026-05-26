@@ -1,7 +1,7 @@
 {
   "name": "ai-engineer-coach",
   "displayName": "AI Engineer Coach",
-  "description": "Analyze your AI coding assistant usage across VS Code, Xcode, Claude, Codex, OpenCode, and GigaCode. Read-only, zero telemetry.",
+  "description": "Анализирует использование AI-ассистентов в VS Code, Xcode, Claude, Codex, OpenCode и GigaCode. Только чтение, без телеметрии.",
   "version": "0.1.0",
   "publisher": "ai-engineer-coach",
   "author": {
@@ -48,17 +48,17 @@
     "commands": [
       {
         "command": "aiEngineerCoach.open",
-        "title": "AI Engineer Coach: Open Dashboard",
+        "title": "AI Engineer Coach: Открыть дашборд",
         "icon": "$(graph)"
       },
       {
         "command": "aiEngineerCoach.reload",
-        "title": "AI Engineer Coach: Reload Data",
+        "title": "AI Engineer Coach: Обновить данные",
         "icon": "$(refresh)"
       },
       {
         "command": "aiEngineerCoach.reviewLocalRules",
-        "title": "AI Engineer Coach: Review Local Rule Approvals",
+        "title": "AI Engineer Coach: Проверить локальные разрешения правил",
         "icon": "$(shield)"
       }
     ],
@@ -75,7 +75,7 @@
       "aiEngineerCoach": [
         {
           "id": "aiEngineerCoach.welcome",
-          "name": "Dashboard",
+          "name": "Дашборд",
           "type": "webview"
         }
       ]

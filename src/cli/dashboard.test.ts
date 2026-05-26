@@ -65,8 +65,8 @@ describe('renderHtmlDashboard', () => {
     const html = renderHtmlDashboard(summarizeSessions(sessions), sessions);
 
     expect(html).toContain('<!doctype html>');
-    expect(html).toContain('AI Engineer Coach Dashboard');
-    expect(html).toContain('Sessions');
+    expect(html).toContain('Дашборд AI Engineer Coach');
+    expect(html).toContain('Сессии');
     expect(html).toContain('GigaCode');
     expect(html).toContain('project');
     expect(html).toContain('write_file');

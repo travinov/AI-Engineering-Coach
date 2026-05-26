@@ -1,7 +1,7 @@
 <h1 align="center">AI Engineer Coach</h1>
 
 <p align="center">
-Analyze your AI coding assistant usage across VS Code, GitHub Copilot for Xcode, Claude, Codex, OpenCode, GigaCode, and GitHub Copilot CLI.
+Анализ использования AI-ассистентов для разработки: VS Code, GitHub Copilot for Xcode, Claude, Codex, OpenCode, GigaCode и GitHub Copilot CLI.
 </p>
 
 <p align="center">
@@ -9,72 +9,76 @@ Analyze your AI coding assistant usage across VS Code, GitHub Copilot for Xcode,
 <img alt="VS Code 1.115+" src="https://img.shields.io/badge/VS%20Code-1.115%2B-007ACC">
 </p>
 
-## Highlights
+## Русская корпоративная сборка
 
-The extension is organized into three sections: **Observe**, **Measure**, and **Improve**.
+Эта ветка собирает расширение с русским интерфейсом по умолчанию. Переключателя языка нет: после установки `.vsix` команды, навигация, основные экраны и CLI/HTML dashboard отображаются на русском.
 
-### Observe
+Расширение работает локально: читает файлы сессий, строит аналитику на машине пользователя и не отправляет телеметрию.
 
-| Page | What it shows |
+## Основные разделы
+
+Интерфейс сгруппирован в три блока: **Наблюдение**, **Метрики** и **Улучшение**.
+
+### Наблюдение
+
+| Страница | Что показывает |
 | --- | --- |
-| **Dashboard** | Practice scores with week-over-week and month-over-month trends, skill finder summary, daily activity chart with per-harness breakdown, and top workspace stats |
-| **Timeline** | Gantt-style session timeline with per-day drill-down, session overlap detection, and a searchable list view |
-| **Coding Moments** | Screenshot gallery from AI coding sessions with story reels, workspace filtering, and progressive image loading |
+| **Дашборд** | Сводные показатели практик, дневную активность, разбивку по harness и топ рабочих областей |
+| **Таймлайн** | Хронологию сессий, детализацию по дням, пересечения сессий и список для поиска |
+| **Моменты кодинга** | Галерею скриншотов AI-сессий с фильтрацией по рабочим областям |
 
-### Measure
+### Метрики
 
-| Page | What it shows |
+| Страница | Что показывает |
 | --- | --- |
-| **Output** | Two tabs -- **Code Output** (generated code volume by language and workspace) and **Token Usage** (model usage table with per-model token breakdown) *(Token Usage temporarily hidden)* |
-| **Burndown** | Monthly token budget progress with projection *(temporarily disabled)* |
-| **Patterns** | 7x24 activity heatmap and work-life balance signals |
+| **Результат** | Объем сгенерированного кода по языкам, рабочим областям, моделям и harness |
+| **Бюджет** | Месячное потребление token budget и прогноз *(раздел может быть временно скрыт)* |
+| **Паттерны** | Тепловую карту активности 7x24 и сигналы баланса рабочего времени |
 
-### Improve
+### Улучшение
 
-| Page | What it shows |
+| Страница | Что показывает |
 | --- | --- |
-| **Anti-Patterns** | Five practice score cards (Prompt Quality, Session Hygiene, Code Review, Tool Mastery, Context Management) with detailed findings, severity ratings, concrete actions, and example prompts |
-| **Skill Finder** | AI-powered analysis of repeated prompts to discover custom skill opportunities, plus matching community skills and agents from the open-source catalog |
-| **Context Health** | Overall context score, agentic readiness checklist, per-harness context provision breakdown, workspace context map (treemap colored by instruction quality), and AI-powered context file review |
-| **Rule Editor** | Create, edit, and live-test detection rules as markdown with form-based or raw-source editing and AI-assisted drafting |
-| **Rule Playground** | Interactive REPL for the rule DSL with field browser, function catalog, and metric list |
-| **Data Explorer** | Browse request and session fields, view distributions, and run ad-hoc filters |
+| **Антипаттерны** | Карточки практик, severity, конкретные действия и примеры prompt |
+| **Поиск навыков** | Повторяющиеся prompt-паттерны, которые можно вынести в reusable skills |
+| **Качество контекста** | Общий context score, readiness checklist и карту рабочих областей |
+| **Rule Editor** | Создание и настройку правил детекции |
+| **Rule Playground** | Интерактивную проверку DSL правил |
+| **Data Explorer** | Просмотр полей сессий, распределений и ad-hoc фильтров |
 
-### Level Up
+### Развитие
 
-| Page | What it shows |
+| Страница | Что показывает |
 | --- | --- |
-| **Learning Center** | Personalized quizzes and code-comparison rounds generated from your actual usage |
-| **Achievements** | XP-based progression with Bronze, Silver, Gold, and Diamond tiers |
-| **Agentic SDLC** | Track how you use AI across the full software-development lifecycle |
-| **Share** | Generate a shareable stat card |
+| **Learning Center** | Персональные задания и сравнение кода по реальному использованию |
+| **Achievements** | Прогресс XP и уровни Bronze, Silver, Gold, Diamond |
+| **Agentic SDLC** | Как AI используется на этапах жизненного цикла разработки |
+| **Share** | Генерацию карточки со статистикой |
 
-## Supported Harnesses
+## Поддерживаемые harness
 
-| Harness | Default location |
+| Harness | Расположение по умолчанию |
 | --- | --- |
 | **Local Agent** | macOS: `~/Library/Application Support/Code/User/workspaceStorage/`<br>Linux: `~/.config/Code/User/workspaceStorage/`<br>Windows: `%APPDATA%\Code\User\workspaceStorage\` |
 | **Local Agent (Insiders)** | macOS: `~/Library/Application Support/Code - Insiders/User/workspaceStorage/`<br>Linux: `~/.config/Code - Insiders/User/workspaceStorage/`<br>Windows: `%APPDATA%\Code - Insiders\User\workspaceStorage\` |
-| **Xcode Copilot Chat** | `~/.config/github-copilot/xcode/` (requires `sqlite3`) |
+| **Xcode Copilot Chat** | `~/.config/github-copilot/xcode/` (нужен `sqlite3`) |
 | **Claude** | macOS/Linux: `~/.claude/projects/`<br>Windows: `%USERPROFILE%\.claude\projects\` |
 | **Codex** | macOS/Linux: `~/.codex/sessions/`<br>Windows: `%USERPROFILE%\.codex\sessions\` |
 | **OpenCode** | macOS/Linux: `~/.local/share/opencode/`<br>Windows: `%USERPROFILE%\.local\share\opencode\` |
 | **GigaCode** | macOS/Linux: `~/.gigacode/projects/*/chats/*.jsonl` |
-| **GitHub Copilot CLI** | `~/.copilot/session-state/` and `~/.copilot/history-session-state/` |
+| **GitHub Copilot CLI** | `~/.copilot/session-state/` и `~/.copilot/history-session-state/` |
 
-## Getting Started
+## Быстрый старт
 
-1. Open the command palette (`Cmd+Shift+P` / `Ctrl+Shift+P`).
-2. Run **AI Engineer Coach: Open Dashboard**.
-3. Use the sidebar to navigate pages. Filter by workspace or harness at the bottom.
-4. Run **AI Engineer Coach: Reload Data** to re-parse after new sessions.
+1. Откройте Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`).
+2. Запустите **AI Engineer Coach: Открыть дашборд**.
+3. Используйте боковую навигацию. Фильтры рабочей области и harness находятся внизу sidebar.
+4. Запустите **AI Engineer Coach: Обновить данные**, чтобы перечитать логи после новых сессий.
 
-
-
-## License
+## Лицензия
 
 [MIT](LICENSE)
 
 ## Disclaimer
 
-This project is an open-source community effort by Microsoft employees. It is **not** an official Microsoft product and is not part of any Microsoft service or support offering. It is provided as-is with no warranties or guarantees.
+Проект является open-source инициативой сотрудников Microsoft. Это не официальный продукт Microsoft, не часть сервиса или support offering Microsoft. Поставляется as-is, без гарантий.

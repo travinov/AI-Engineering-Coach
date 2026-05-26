@@ -8,6 +8,8 @@ description: "Install AI Engineer Coach as a VS Code extension"
 
 Use this path when you need the interactive dashboard inside VS Code. If you only need terminal output, use the standalone CLI instead.
 
+This branch builds a Russian corporate `.vsix`: commands, navigation, the main dashboard, CLI help, and standalone HTML dashboard use Russian text by default. There is no language switcher.
+
 ## What You Need
 
 - VS Code 1.115 or later.
@@ -23,7 +25,7 @@ Use this when the corporate machine can download npm dependencies through an app
 Download the branch ZIP:
 
 ```text
-https://github.com/travinov/AI-Engineering-Coach/archive/refs/heads/codex/standalone-cli.zip
+https://github.com/travinov/AI-Engineering-Coach/archive/refs/heads/codex/russian-localization.zip
 ```
 
 Unzip it and open a terminal in the extracted folder.
@@ -31,7 +33,7 @@ Unzip it and open a terminal in the extracted folder.
 macOS / Linux / SberOS:
 
 ```bash
-cd ~/Downloads/AI-Engineering-Coach-codex-standalone-cli
+cd ~/Downloads/AI-Engineering-Coach-codex-russian-localization
 ls package.json
 npm install
 npm run package
@@ -40,7 +42,7 @@ npm run package
 Windows PowerShell:
 
 ```powershell
-cd "$env:USERPROFILE\Downloads\AI-Engineering-Coach-codex-standalone-cli"
+cd "$env:USERPROFILE\Downloads\AI-Engineering-Coach-codex-russian-localization"
 Test-Path .\package.json
 npm install
 npm run package
@@ -105,8 +107,8 @@ After installation:
 2. Open the Command Palette:
    - macOS: `Cmd+Shift+P`
    - Windows / Linux / SberOS: `Ctrl+Shift+P`
-3. Run **AI Engineer Coach: Open Dashboard**.
-4. If new sessions are created after the dashboard opens, run **AI Engineer Coach: Reload Data**.
+3. Run **AI Engineer Coach: Открыть дашборд**.
+4. If new sessions are created after the dashboard opens, run **AI Engineer Coach: Обновить данные**.
 
 ## GigaCode Logs
 

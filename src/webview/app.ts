@@ -81,12 +81,12 @@ function refreshNavBadges(filter: DateFilter): void {
 
 /** Phase labels matching LOAD_PHASES from parser.ts */
 const PHASE_LABELS = [
-  'Discovering log directories',
-  'Checking cache',
-  'Parsing session logs',
-  'Scanning external harnesses',
-  'Preparing analytics',
-  'Ready',
+  'Поиск каталогов логов',
+  'Проверка кеша',
+  'Разбор логов сессий',
+  'Сканирование внешних harness',
+  'Подготовка аналитики',
+  'Готово',
 ];
 
 let loadStartTime = 0;
@@ -113,9 +113,9 @@ function ensureLoadingUI(): void {
         <div class="loading-status-card">
           <div class="loading-status-head">
             <div class="loading-hero">
-              <div class="loading-kicker">Building Activity Index</div>
+              <div class="loading-kicker">Строим индекс активности</div>
               <div class="loading-title" id="loading-phase-title">${PHASE_LABELS[0]}</div>
-              <div class="loading-phase-detail" id="loading-phase-detail">Preparing parser and workspace inventory.</div>
+              <div class="loading-phase-detail" id="loading-phase-detail">Готовим парсер и список рабочих областей.</div>
             </div>
             <div class="loading-meta">
               <span class="loading-pct" id="loading-pct">0%</span>
@@ -129,7 +129,7 @@ function ensureLoadingUI(): void {
             <ul class="progress-checklist" id="progress-checklist">
               ${PHASE_LABELS.map((label, i) => html`<li class="progress-step" id=${'pstep-' + i}><span class="step-icon">\u25CB</span> <span class="step-label">${label}</span></li>`)}
             </ul>
-            <div class="loading-log" id="loading-log"><div class="loading-log-placeholder">Parser events will appear here as workspaces are scanned.</div></div>
+            <div class="loading-log" id="loading-log"><div class="loading-log-placeholder">События парсера появятся здесь по мере сканирования рабочих областей.</div></div>
           </div>
         </div>
       </div>
@@ -282,7 +282,7 @@ function renderWorkspaceGrid(plan: string[]): void {
   const gridCells = items.map(item => {
     const level = sessionIntensityLevel(item.size, intensityBreakpoints);
     const vars = sessionTileVars(level);
-    const titleParts = [item.date ? item.date : '', item.workspace, item.size > 0 ? `${Math.round(item.size / 1024)} KB session` : 'session'];
+    const titleParts = [item.date ? item.date : '', item.workspace, item.size > 0 ? `${Math.round(item.size / 1024)} KB сессия` : 'сессия'];
     return html`<div class="cal-cell cal-workspace-cell cal-workspace-pending" data-slot=${item.order} title=${titleParts.filter(Boolean).join(' \u2014 ')} style=${`--pending-bg:${vars.pendingBg};--pending-border:${vars.pendingBorder};--done-bg:${vars.doneBg};--done-border:${vars.doneBorder};--done-glow:${vars.doneGlow};`}></div>`;
   });
   render(html`<div class="loading-bg-grid" id="loading-bg-grid">${gridCells}</div>`, container);
@@ -355,7 +355,7 @@ function updatePhaseChecklist(currentPhase: number): void {
 /** Update UI based on progress message */
 function handleProgress(msg: { phase: number; detail?: string; pct: number; sessions?: number; linesOfCode?: number; toolCalls?: number; imagesAnalyzed?: number; filesEdited?: number; requests?: number; workspacePlan?: string[]; workspaceDone?: string }): void {
   ensureLoadingUI();
-  const phase = PHASE_LABELS[msg.phase] ?? `Phase ${msg.phase}`;
+  const phase = PHASE_LABELS[msg.phase] ?? `Фаза ${msg.phase}`;
   const detail = msg.detail ?? '';
 
   if (msg.workspacePlan) renderWorkspaceGrid(msg.workspacePlan);
@@ -364,7 +364,7 @@ function handleProgress(msg: { phase: number; detail?: string; pct: number; sess
   const phaseTitleEl = document.getElementById('loading-phase-title');
   if (phaseTitleEl) phaseTitleEl.textContent = phase;
   const phaseDetailEl = document.getElementById('loading-phase-detail');
-  if (phaseDetailEl) phaseDetailEl.textContent = detail || 'Working through your workspace history.';
+  if (phaseDetailEl) phaseDetailEl.textContent = detail || 'Обрабатываем историю рабочих областей.';
 
   const bar = document.getElementById('load-progress-bar');
   if (bar) bar.style.width = `${Math.min(100, msg.pct)}%`;
@@ -374,7 +374,7 @@ function handleProgress(msg: { phase: number; detail?: string; pct: number; sess
 
   const sessEl = document.getElementById('loading-sessions');
   if (sessEl && msg.sessions && msg.sessions > 0) {
-    sessEl.textContent = `${msg.sessions.toLocaleString()} sessions`;
+    sessEl.textContent = `${msg.sessions.toLocaleString()} сессий`;
   }
 
   // Update fun stats ticker (update values in-place, no re-render)
@@ -383,11 +383,11 @@ function handleProgress(msg: { phase: number; detail?: string; pct: number; sess
     if (!tickerEl.dataset.init) {
       tickerEl.dataset.init = '1';
       tickerEl.innerHTML = [
-        `<span class="ticker-stat" id="ts-loc"><svg class="ticker-icon" viewBox="0 0 16 16" fill="none"><path d="M4 2h5l3 3v9H4V2z" stroke="currentColor" stroke-width="1.3"/><path d="M6 8h4M6 10.5h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span class="ticker-value" id="tv-loc">0</span> lines generated</span>`,
-        `<span class="ticker-stat" id="ts-tools"><svg class="ticker-icon" viewBox="0 0 16 16" fill="none"><path d="M10.3 2.5a2.2 2.2 0 0 0-3 3.1L3.5 9.4l-.9 3.1 3.1-.9 3.8-3.8a2.2 2.2 0 0 0 3.1-3l-1.6 1.6-1.1-1.1L11.5 3.7z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ticker-value" id="tv-tools">0</span> tool calls</span>`,
-        `<span class="ticker-stat" id="ts-images"><svg class="ticker-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="5.5" cy="6.5" r="1.2" stroke="currentColor" stroke-width="1"/><path d="M2 11l3-3 2 2 4-4 3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ticker-value" id="tv-images">0</span> images analyzed</span>`,
-        `<span class="ticker-stat" id="ts-files"><svg class="ticker-icon" viewBox="0 0 16 16" fill="none"><path d="M2 4.5A1.5 1.5 0 0 1 3.5 3H7l1 1.5h4.5A1.5 1.5 0 0 1 14 6v5.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 11.5V4.5z" stroke="currentColor" stroke-width="1.2"/></svg><span class="ticker-value" id="tv-files">0</span> files touched</span>`,
-        `<span class="ticker-stat" id="ts-reqs"><svg class="ticker-icon" viewBox="0 0 16 16" fill="none"><path d="M3 3h10a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5l-3 2.5V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="ticker-value" id="tv-reqs">0</span> prompts sent</span>`,
+        `<span class="ticker-stat" id="ts-loc"><svg class="ticker-icon" viewBox="0 0 16 16" fill="none"><path d="M4 2h5l3 3v9H4V2z" stroke="currentColor" stroke-width="1.3"/><path d="M6 8h4M6 10.5h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span class="ticker-value" id="tv-loc">0</span> строк сгенерировано</span>`,
+        `<span class="ticker-stat" id="ts-tools"><svg class="ticker-icon" viewBox="0 0 16 16" fill="none"><path d="M10.3 2.5a2.2 2.2 0 0 0-3 3.1L3.5 9.4l-.9 3.1 3.1-.9 3.8-3.8a2.2 2.2 0 0 0 3.1-3l-1.6 1.6-1.1-1.1L11.5 3.7z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ticker-value" id="tv-tools">0</span> вызовов инструментов</span>`,
+        `<span class="ticker-stat" id="ts-images"><svg class="ticker-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="3" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.2"/><circle cx="5.5" cy="6.5" r="1.2" stroke="currentColor" stroke-width="1"/><path d="M2 11l3-3 2 2 4-4 3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ticker-value" id="tv-images">0</span> изображений проанализировано</span>`,
+        `<span class="ticker-stat" id="ts-files"><svg class="ticker-icon" viewBox="0 0 16 16" fill="none"><path d="M2 4.5A1.5 1.5 0 0 1 3.5 3H7l1 1.5h4.5A1.5 1.5 0 0 1 14 6v5.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 11.5V4.5z" stroke="currentColor" stroke-width="1.2"/></svg><span class="ticker-value" id="tv-files">0</span> файлов затронуто</span>`,
+        `<span class="ticker-stat" id="ts-reqs"><svg class="ticker-icon" viewBox="0 0 16 16" fill="none"><path d="M3 3h10a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5l-3 2.5V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg><span class="ticker-value" id="tv-reqs">0</span> prompt отправлено</span>`,
       ].join('');
     }
     const locEl = document.getElementById('tv-loc');
@@ -511,20 +511,20 @@ function renderWsList(query: string): void {
 
   const show = filtered.slice(0, 100); // cap rendered items
 
-  const vnodes = [html`<div class="combobox-item" data-value="">All Workspaces</div>`];
+  const vnodes = [html`<div class="combobox-item" data-value="">Все рабочие области</div>`];
 
   if (!q) {
     // No search query: show "Recent" section header before recent items,
-    // "All Workspaces" section header before the alphabetical list
+    // "Все рабочие области" section header before the alphabetical list
     const recent = show.filter(ws => ws.recent);
     const rest = show.filter(ws => !ws.recent);
     if (recent.length > 0) {
-      vnodes.push(html`<div class="combobox-section-header">Recent</div>`);
+      vnodes.push(html`<div class="combobox-section-header">Недавние</div>`);
       vnodes.push(...recent.map(ws =>
         html`<div class=${'combobox-item' + (ws.id === currentFilter.workspaceId ? ' selected' : '')} data-value=${ws.id}>${ws.name}</div>`
       ));
       if (rest.length > 0) {
-        vnodes.push(html`<div class="combobox-section-header">All Workspaces</div>`);
+        vnodes.push(html`<div class="combobox-section-header">Все рабочие области</div>`);
       }
     }
     vnodes.push(...rest.map(ws =>
@@ -538,7 +538,7 @@ function renderWsList(query: string): void {
   }
 
   if (filtered.length > 100) {
-    vnodes.push(html`<div class="combobox-item" style="color:var(--text-muted);pointer-events:none;">${filtered.length - 100} more — keep typing to narrow</div>`);
+    vnodes.push(html`<div class="combobox-item" style="color:var(--text-muted);pointer-events:none;">Еще ${filtered.length - 100} — продолжайте вводить для сужения списка</div>`);
   }
 
   render(html`<span>${vnodes}</span>`, wsFilterList);

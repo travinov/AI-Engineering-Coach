@@ -16,7 +16,7 @@ No API keys, accounts, or external services required. Everything runs locally.
 
 1. [Install AI Engineer Coach]({{< ref "getting-started/vscode-installation" >}}) as a VS Code extension, or use the [standalone CLI install]({{< ref "getting-started/installation" >}}) for terminal-only reporting
 2. Open the Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`)
-3. Run **AI Engineer Coach: Open Dashboard**
+3. Run **AI Engineer Coach: Открыть дашборд**
 4. The extension scans your local log directories and displays your analytics
 
 The dashboard opens as a webview panel inside VS Code. Use the sidebar to navigate between views.
