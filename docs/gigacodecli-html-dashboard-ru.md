@@ -34,6 +34,35 @@ Test-Path .\package.json
 
 Если `package.json` не найден, значит терминал открыт не в папке проекта.
 
+## Быстрая установка на macOS через скрипт
+
+В ZIP есть готовый скрипт для macOS. Он устанавливает команду `gigaCodeCLI` в пользовательский каталог `$HOME/.local`, не требует `sudo` и добавляет PATH в shell profile.
+
+Из распакованной папки проекта:
+
+```bash
+chmod +x ./scripts/install-gigacodecli-macos.sh
+./scripts/install-gigacodecli-macos.sh
+```
+
+Установить, построить HTML-дашборд и сразу открыть его:
+
+```bash
+./scripts/install-gigacodecli-macos.sh --dashboard --open
+```
+
+Если логи GigaCode лежат не в стандартном месте:
+
+```bash
+./scripts/install-gigacodecli-macos.sh --dashboard --open --path "$HOME/.gigacode/projects" --out gigacode-dashboard.html
+```
+
+После установки в новом терминале команда будет доступна как:
+
+```bash
+gigaCodeCLI --help
+```
+
 ## 3. Установить зависимости и собрать CLI
 
 ```bash
